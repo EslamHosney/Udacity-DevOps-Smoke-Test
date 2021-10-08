@@ -6,17 +6,17 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
-      - checkout
+      - run: apk add --update curl
       - run:
-          name: "Say hello"
+          name: smoke test
           command: |
-            if curl -s --head "https://google.com" 
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
             then
-              echo "It worked!"
-              echo 0
+              return 0
             else
-              echo "It failed"
-              echo 1
+              return 1
             fi
 
 workflows:
